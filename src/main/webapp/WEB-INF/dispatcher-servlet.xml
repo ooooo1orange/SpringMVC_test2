@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc 
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	<mvc:resources mapping="/resources/**"
+		location="/uploadimages/" />
+
+	<context:component-scan
+		base-package="com.gg.test2" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+	<bean id="newsDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- <property name="driverClassName" value=" com.mysql.cj.jdbc.Driver"> 
+			</property> -->
+		<property name="driverClassName" value=" org.sqlite.JDBC">
+		</property>
+		<!-- <property name="url" value="jdbc:mysql://127.0.0.1:3306/itrdb?serverTimezone=UTC&amp;characterEncoding=utf-8"></property> -->
+		<property name="url"
+			value="jdbc:sqlite:/Users/polarbear/Documents/javaspace/test2/src/main/webapp/WEB-INF/DataBase/itrdb.db"></property>
+		<!-- <property name="username" value="root"></property> <property name="password" 
+			value="p@ssw0rd"></property> -->
+	</bean>
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"
+		lazy-init="false" autowire="default">
+		<property name="dataSource">
+			<ref bean="newsDataSource" />
+		</property>
+	</bean>
+
+
+	<!-- 解決中文亂碼 -->
+	<bean id="utf8Charset" class="java.nio.charset.Charset"
+		factory-method="forName">
+		<constructor-arg value="UTF-8" />
+	</bean>
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg ref="utf8Charset" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+</beans>
