@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gg.test2.componet.BlogContentBean;
+import com.gg.test2.componet.NavFooterBean;
 import com.gg.test2.repository.EditBlog;
 import com.gg.test2.service.BlogContentService;
 
@@ -22,7 +23,42 @@ public class BlogController {
 	BlogContentService blogContentService;
 	@Autowired
 	EditBlog ib;
+	@Autowired
+	NavFooterBean nf;
 	
+	/* #########################bootstrap page######################### */
+	@GetMapping("/index")
+	public String GoIndex(Model model) {
+		//nf = blogContentService.GetNavAndFooter();
+		model.addAttribute("NavAndFooter", nf);
+		List<BlogContentBean> lb = blogContentService.GetBlog();
+		model.addAttribute("ListBlogContentBean", lb);
+		return "index";
+	}
+
+	@GetMapping("/about")
+	public String GoAbout(Model model) {
+		model.addAttribute("NavAndFooter", nf);
+		return "about";
+	}
+
+	@GetMapping("/post")
+	public String GoSelf(Model model, @ModelAttribute("id") String userID) {
+		model.addAttribute("NavAndFooter", nf);
+		userID = "11";
+		List<BlogContentBean> lb = blogContentService.GetBlogByUser(userID);
+		model.addAttribute("ListBlogContentBean", lb);
+		return "post";
+	}
+
+	@GetMapping("/contact")
+	public String GoContact(Model model) {
+		model.addAttribute("NavAndFooter", nf);
+		return "contact";
+	}
+
+	/* #########################bootstrap page######################### */
+
 	/* #########################顯示編輯區######################### */
 	@GetMapping("/blog")
 	public String GetBlog(Model model) {
@@ -30,9 +66,9 @@ public class BlogController {
 		model.addAttribute("ListBlogContentBean", lb);
 		return "blog";
 	}
-	
+
 	@GetMapping("/content")
-	public String Getcontent(Model model,@ModelAttribute("id") String strID) {
+	public String Getcontent(Model model, @ModelAttribute("id") String strID) {
 		List<BlogContentBean> lb = blogContentService.GetBlogByID(Integer.parseInt(strID));
 		model.addAttribute("ListBlogContentBean", lb);
 		return "contentpage";
@@ -51,8 +87,8 @@ public class BlogController {
 		return "blogedit";
 	}
 	/* #########################顯示編輯區######################### */
-	
-	/* #########################新刪改查區######################### */
+
+	/* #########################新刪改查區#######這塊應該擺service################## */
 	@ResponseBody
 	@PostMapping("/insertblog")
 	public String insertblog(@RequestParam(value = "title", required = true) String title,

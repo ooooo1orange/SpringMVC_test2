@@ -100,5 +100,20 @@ public class BlogContentRepository {
 		return rows;
 		
 	}
+	public List<BlogContentBean> getBlogByUser(Integer userID) {
+
+		List rows = (List) jdbcTemplate.query("select a.*,b.name as name from blog as a\n" + "left join users as b\n"
+				+ "on a.owner = b.id \n" + "where a.owner = ?", new Object[] { userID },
+				new RowMapperResultSetExtractor(new BlogRowMapper()));
+
+		Iterator it = rows.iterator();
+		while (it.hasNext()) {
+			BlogContentBean blogmap = (BlogContentBean) it.next();
+
+			// System.out.println(usermap.get("name"));
+		}
+		return rows;
+		
+	}
 
 }

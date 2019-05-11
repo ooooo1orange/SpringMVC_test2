@@ -122,7 +122,7 @@ public class HelloController {
 	@Autowired
 	ServletContext context;
 	
-	final String UPLOADPATH = "uploadimages";
+	final String UPLOADPATH = "resources/uploadimages";
 	// final String UPLOADPATH =
 	// "/Users/polarbear/Documents/javaspace/test2/src/main/webapp/upload";
 
@@ -136,6 +136,7 @@ public class HelloController {
 		System.out.println(UPLOADPATH);
 		System.out.println(filename);
 		String path = context.getRealPath("") + File.separator + UPLOADPATH + File.separator + filename;
+		System.out.println(path);
 		// String path = UPLOADPATH + File.separator + filename;
 		BufferedOutputStream outst;
 		outst = new BufferedOutputStream(new FileOutputStream(new File(path)));
@@ -144,7 +145,7 @@ public class HelloController {
 		outst.flush();
 		outst.close();
 
-		System.out.println(path);
+		
 		System.out.println("hello aa!");
 		return "http://localhost:8080/test2/resources/" + filename;
 
