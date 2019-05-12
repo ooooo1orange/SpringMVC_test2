@@ -38,7 +38,7 @@ public class NavFooterBean {
 				"	<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\"\n" + 
 				"		id=\"mainNav\">\n" + 
 				"		<div class=\"container\">\n" + 
-				"			<a class=\"navbar-brand\" href=\"index.jsp\">Start Bootstrap</a>\n" + 
+				"			<a class=\"navbar-brand\" href=\"index\">Start Bootstrap</a>\n" + 
 				"			<button class=\"navbar-toggler navbar-toggler-right\" type=\"button\"\n" + 
 				"				data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n" + 
 				"				aria-controls=\"navbarResponsive\" aria-expanded=\"false\"\n" + 
@@ -47,13 +47,13 @@ public class NavFooterBean {
 				"			</button>\n" + 
 				"			<div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\n" + 
 				"				<ul class=\"navbar-nav ml-auto\">\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"index.jsp\">Home</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"index\">Home</a>\n" + 
 				"					</li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"about.html\">About</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"about\">About</a>\n" + 
 				"					</li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post.html\">Sample\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post\">Sample\n" + 
 				"							Post</a></li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.html\">Contact</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"contact\">Contact</a>\n" + 
 				"					</li>\n" + 
 				"				</ul>\n" + 
 				"			</div>\n" + 

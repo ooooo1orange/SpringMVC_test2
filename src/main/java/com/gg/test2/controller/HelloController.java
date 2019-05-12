@@ -32,10 +32,6 @@ import com.gg.test2.service.UserService;
 
 @Controller
 public class HelloController {
-	@GetMapping("/")
-	public String root() {
-		return "home";
-	}
 
 	@ResponseBody
 	@GetMapping("/homestring")

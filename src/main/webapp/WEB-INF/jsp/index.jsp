@@ -64,7 +64,7 @@
 					
 				
 				
-					<a href="/test2/content?id=${item.id}">
+					<a href="/test2/post?bid=${item.id}">
 						<h2 class="post-title">${item.title}</h2>
 						<h3 class="post-subtitle">${item.id}</h3>
 					</a>

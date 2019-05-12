@@ -36,6 +36,17 @@ public class BlogContentService {
 		return blogContentRepository.getBlogByUser(Integer.parseInt(userID));
 	}
 	
+	public List<BlogContentBean> GetBlog(String userID,String blogID){
+		System.out.println("userID="+userID+"*******\"blogID=\"+"+blogID);
+		if(!userID.isEmpty()) {
+			return GetBlogByUser(userID.toString());
+		}else if(!blogID.isEmpty()) {
+			return GetBlogByID(Integer.parseInt(blogID));
+		}else {
+			return GetBlog();
+		}	
+	}
+	
 	public NavFooterBean GetNavAndFooter() {
 		return nf;
 	}

@@ -27,6 +27,11 @@ public class BlogController {
 	NavFooterBean nf;
 	
 	/* #########################bootstrap page######################### */
+	@GetMapping("/")
+	public String root() {
+		return "redirect:index";
+	}
+	
 	@GetMapping("/index")
 	public String GoIndex(Model model) {
 		//nf = blogContentService.GetNavAndFooter();
@@ -43,10 +48,10 @@ public class BlogController {
 	}
 
 	@GetMapping("/post")
-	public String GoSelf(Model model, @ModelAttribute("id") String userID) {
+	public String GoSelf(Model model, @ModelAttribute("uid") String userID, @ModelAttribute("bid") String blogID) {
 		model.addAttribute("NavAndFooter", nf);
-		userID = "11";
-		List<BlogContentBean> lb = blogContentService.GetBlogByUser(userID);
+		//userID = "11";
+		List<BlogContentBean> lb = blogContentService.GetBlog(userID,blogID);
 		model.addAttribute("ListBlogContentBean", lb);
 		return "post";
 	}
