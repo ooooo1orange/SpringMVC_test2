@@ -117,7 +117,7 @@ public class HelloController {
 
 	@Autowired
 	ServletContext context;
-	
+
 	final String UPLOADPATH = "resources/uploadimages";
 	// final String UPLOADPATH =
 	// "/Users/polarbear/Documents/javaspace/test2/src/main/webapp/upload";
@@ -141,10 +141,9 @@ public class HelloController {
 		outst.flush();
 		outst.close();
 
-		
 		System.out.println("hello aa!");
-		return "http://localhost:8080/test2/resources/" + filename;
+		return "http://localhost:8080/test2/" + UPLOADPATH + File.separator + filename;
 
 	}
-	
+
 }

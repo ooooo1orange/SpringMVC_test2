@@ -3,6 +3,7 @@ package com.gg.test2.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +61,13 @@ public class BlogController {
 	public String GoContact(Model model) {
 		model.addAttribute("NavAndFooter", nf);
 		return "contact";
+	}
+	@ResponseBody
+	@GetMapping("/pass")
+	public String pass() {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String password = passwordEncoder.encode("123456");
+		return password;
 	}
 
 	/* #########################bootstrap page######################### */
