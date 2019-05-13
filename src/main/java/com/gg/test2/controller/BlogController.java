@@ -61,12 +61,9 @@ public class BlogController {
 		return "post";
 	}
 
-	@ResponseBody
-	@GetMapping("/pass")
-	public String pass() {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String password = passwordEncoder.encode("123456");
-		return password;
+	@GetMapping("/login")
+	public String login() {
+		return "login";
 	}
 
 	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })

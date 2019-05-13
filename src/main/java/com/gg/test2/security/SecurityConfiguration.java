@@ -35,13 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// listener session
 		
 		http
-		
 		.authorizeRequests()
 			.antMatchers("/resources/**","/signup")
 				.permitAll()
 			.anyRequest().authenticated()
 			.and()
 		.formLogin()
+			.loginPage("/login")
+			.defaultSuccessUrl("/")
 			.permitAll()
 			.and()
 		.httpBasic();
