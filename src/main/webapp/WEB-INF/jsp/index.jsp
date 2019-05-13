@@ -61,9 +61,6 @@
 				
 				<div class="post-preview">
 				
-					
-				
-				
 					<a href="/test2/post?bid=${item.id}">
 						<h2 class="post-title">${item.title}</h2>
 						<h3 class="post-subtitle">${item.id}</h3>
@@ -71,8 +68,6 @@
 					<p class="post-meta">
 						Posted by <a href="#">${item.name}</a> on ${item.modifydate}
 					</p>
-					
-					
 					
 				</div>
 				<hr>

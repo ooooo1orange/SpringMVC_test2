@@ -53,7 +53,7 @@ public class NavFooterBean {
 				"					</li>\n" + 
 				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post\">Sample\n" + 
 				"							Post</a></li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"contact\">Contact</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"signup\">Contact</a>\n" + 
 				"					</li>\n" + 
 				"				</ul>\n" + 
 				"			</div>\n" + 

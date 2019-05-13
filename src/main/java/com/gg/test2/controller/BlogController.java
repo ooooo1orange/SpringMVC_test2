@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,6 +19,7 @@ import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.NavFooterBean;
 import com.gg.test2.repository.EditBlog;
 import com.gg.test2.service.BlogContentService;
+import com.gg.test2.service.UserService;
 
 @Controller
 public class BlogController {
@@ -26,16 +29,18 @@ public class BlogController {
 	EditBlog ib;
 	@Autowired
 	NavFooterBean nf;
-	
+	@Autowired
+	UserService us;
+
 	/* #########################bootstrap page######################### */
 	@GetMapping("/")
 	public String root() {
 		return "redirect:index";
 	}
-	
+
 	@GetMapping("/index")
 	public String GoIndex(Model model) {
-		//nf = blogContentService.GetNavAndFooter();
+		// nf = blogContentService.GetNavAndFooter();
 		model.addAttribute("NavAndFooter", nf);
 		List<BlogContentBean> lb = blogContentService.GetBlog();
 		model.addAttribute("ListBlogContentBean", lb);
@@ -51,23 +56,30 @@ public class BlogController {
 	@GetMapping("/post")
 	public String GoSelf(Model model, @ModelAttribute("uid") String userID, @ModelAttribute("bid") String blogID) {
 		model.addAttribute("NavAndFooter", nf);
-		//userID = "11";
-		List<BlogContentBean> lb = blogContentService.GetBlog(userID,blogID);
+		List<BlogContentBean> lb = blogContentService.GetBlog(userID, blogID);
 		model.addAttribute("ListBlogContentBean", lb);
 		return "post";
 	}
 
-	@GetMapping("/contact")
-	public String GoContact(Model model) {
-		model.addAttribute("NavAndFooter", nf);
-		return "contact";
-	}
 	@ResponseBody
 	@GetMapping("/pass")
 	public String pass() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode("123456");
 		return password;
+	}
+
+	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })
+	public String signup(Model model, @ModelAttribute("workid") String workid,
+			@ModelAttribute("password") String password, 
+			@ModelAttribute("name") String name,
+			@ModelAttribute("email") String email) {
+		
+		//url會看到資料 待改進
+		String h = us.GoToSignUP(name, email, workid, password);
+		model.addAttribute("isSignUp", h);
+		
+		return "signup";
 	}
 
 	/* #########################bootstrap page######################### */
