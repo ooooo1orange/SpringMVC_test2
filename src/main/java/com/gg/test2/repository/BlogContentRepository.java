@@ -116,11 +116,4 @@ public class BlogContentRepository {
 		
 	}
 	
-	public String getUserIDByWorkID(String workid) {
-		String id = jdbcTemplate.queryForObject("select id from users where work_id = ?", new Object[] { workid },
-                java.lang.String.class);
-
-		return id;
-	}
-
 }

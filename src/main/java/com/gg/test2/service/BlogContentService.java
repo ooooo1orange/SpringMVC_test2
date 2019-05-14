@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.NavFooterBean;
 import com.gg.test2.repository.BlogContentRepository;
+import com.gg.test2.repository.UserRepository;
 
 @Service
 public class BlogContentService {
@@ -18,6 +19,8 @@ public class BlogContentService {
 	private BlogContentRepository blogContentRepository;
 	@Autowired
 	private NavFooterBean nf;
+	@Autowired
+	private UserRepository ur;
 
 	public List<BlogContentBean> GetBlog() {
 		return blogContentRepository.getBlog();
@@ -41,11 +44,11 @@ public class BlogContentService {
 
 	public List<BlogContentBean> GetBlogByUser(Authentication auth) {
 		String workid = auth.getName(); // 取得工號
-		String id = blogContentRepository.getUserIDByWorkID(workid);
+		String id = ur.getUserIDByWorkID(workid);
 		return blogContentRepository.getBlogByUser(Integer.parseInt(id));
 	}
 
-	public List<BlogContentBean> GetBlog(String userID, String blogID) {
+	public List<BlogContentBean> GetBlog(String blogID) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String workid = auth.getName();
 		if (!blogID.isEmpty()) {
@@ -63,8 +66,9 @@ public class BlogContentService {
 		return nf;
 	}
 
+	//文章編輯頁面顯示判斷	
 	public void showEditType(Model model, String strID, Authentication auth) {
-		String id = blogContentRepository.getUserIDByWorkID(auth.getName());
+		String id = ur.getUserIDByWorkID(auth.getName());
 		model.addAttribute("username", id);
 		if (strID.isEmpty()) {
 			model.addAttribute("ListBlogContentBean", "第二步：請在此輸入內文");

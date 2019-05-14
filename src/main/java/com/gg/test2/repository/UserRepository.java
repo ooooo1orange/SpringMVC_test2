@@ -72,6 +72,14 @@ public class UserRepository {
 		return password;
 	}
 	
+	public String getUserIDByWorkID(String work_id) {
+
+		String id = jdbcTemplate.queryForObject("select id from users where work_id = ?",
+				new Object[] { work_id }, java.lang.String.class);
+
+		return id;
+	}
+	
 	public void insertUser(String name, String email, String workid, String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodepassword = passwordEncoder.encode(password);

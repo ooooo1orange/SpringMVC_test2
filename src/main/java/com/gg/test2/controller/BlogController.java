@@ -60,10 +60,14 @@ public class BlogController {
 	}
 
 	@GetMapping("/post")
-	public String GoSelf(Model model, @ModelAttribute("uid") String userID, @ModelAttribute("bid") String blogID) {
+	public String GoSelf(Model model, @ModelAttribute("bid") String blogID) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String id = us.GetUserIDByWorkID(auth);
+		System.out.println("this is user id:" + id);
 		model.addAttribute("NavAndFooter", nf);
-		List<BlogContentBean> lb = blogContentService.GetBlog(userID, blogID);
+		List<BlogContentBean> lb = blogContentService.GetBlog(blogID);
 		model.addAttribute("ListBlogContentBean", lb);
+		model.addAttribute("UserID", id);
 		return "post";
 	}
 

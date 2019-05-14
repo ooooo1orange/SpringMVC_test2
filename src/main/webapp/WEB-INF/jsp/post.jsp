@@ -55,12 +55,14 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <c:forEach items="${ListBlogContentBean}" var="item">
 			<br>
-			${item.title}
+			<h1>${item.title}</h1>
 			<br>
 			${item.content}
 			<div>作者 ${item.name}</div><div>編輯時間 ${item.modifydate}</div>
+			<c:if test="${item.owner == UserID}">
 			<button  class="btn btn-primary"
 						onclick="javascript:location.href='/test2/blogedit?id=${item.id}'">edit</button>
+			</c:if>
 			<hr>	
 		</c:forEach>
         </div>
