@@ -27,8 +27,11 @@ function processData() {
 			${id}
 			"title" : $('#title').val(),
 			"content" : CKEDITOR.instances.content.getData(),
-			"owner" : "11"
+			"owner" : ${username}
 		};
+		var token = $("meta[name='_csrf']").attr("th:content");
+		var header = $("meta[name='_csrf_header']").attr("th:content");
+		
 		if(data.id==undefined){
 			// insert
 			$.ajax({
@@ -37,6 +40,9 @@ function processData() {
 				contentType : "application/x-www-form-urlencoded;charset=utf-8",
 				// dataType : 'json',
 				data : data,
+				beforeSend: function(xhr) {
+			        xhr.setRequestHeader(header, token);  //发送请求前将csrfToken设置到请求头中
+			    },
 				success : function(data) {
 					alert("OK");
 					console.log(data);
@@ -50,6 +56,9 @@ function processData() {
 				contentType : "application/x-www-form-urlencoded;charset=utf-8",
 				// dataType : 'json',
 				data : data,
+				beforeSend: function(xhr) {
+			        xhr.setRequestHeader(header, token);  //发送请求前将csrfToken设置到请求头中
+			    },
 				success : function() {
 					alert("OK");
 					// console.log(data);
@@ -96,15 +105,9 @@ function processData() {
 				<!-- active表示當前頁面 -->
 				<li class="nav-item active"><a class="nav-link" href="/test2/">首頁<span
 						class="sr-only">(current)</span></a></li>
-				<li class="nav-item"><a class="nav-link" href="/test2/blogedit">新增文章</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">個人頁</a></li>
+				
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search"
-					aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search
-				</button>
-			</form>
+			
 		</div>
 
 	</nav>
@@ -188,7 +191,7 @@ function processData() {
 		<textarea name="content" id="content" rows="10" cols="80">
 		${BlogContentBean}
 		</textarea>
-		<input type="text" id="tag" placeholder="看你要不要輸入tag...." /> <input
+		<input type="text" id="tag" placeholder="看你要不要輸入tag...." /><input
 			type='button' value='送出' onclick='processData()'>
 
 	</form>

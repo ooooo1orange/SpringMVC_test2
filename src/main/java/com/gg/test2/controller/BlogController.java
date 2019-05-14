@@ -2,8 +2,14 @@ package com.gg.test2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,16 +72,25 @@ public class BlogController {
 		return "login";
 	}
 
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/";// You can redirect wherever you want, but generally it's a good practice to
+							// show login screen again.
+	}
+
 	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })
 	public String signup(Model model, @ModelAttribute("workid") String workid,
-			@ModelAttribute("password") String password, 
-			@ModelAttribute("name") String name,
+			@ModelAttribute("password") String password, @ModelAttribute("name") String name,
 			@ModelAttribute("email") String email) {
-		
-		//url會看到資料 待改進
+
+		// url會看到資料 待改進
 		String h = us.GoToSignUP(name, email, workid, password);
 		model.addAttribute("isSignUp", h);
-		
+
 		return "signup";
 	}
 
@@ -104,8 +119,8 @@ public class BlogController {
 
 	@GetMapping("/blogedit")
 	public String blogedit(@ModelAttribute("id") String strID, Model model) {
-		System.out.println(strID);
-		showEditType(model, strID);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		blogContentService.showEditType(model, strID, auth);
 		return "blogedit";
 	}
 	/* #########################顯示編輯區######################### */
@@ -141,19 +156,6 @@ public class BlogController {
 		System.out.println(result);
 		ib.delete(id);
 		return result;
-	}
-
-	private void showEditType(Model model, String strID) {
-		if (strID.isEmpty()) {
-			model.addAttribute("ListBlogContentBean", "第二步：請在此輸入內文");
-			model.addAttribute("startupMode", "'wysiwyg'");
-		} else {
-			model.addAttribute("BlogTitleBean", blogContentService.GetTitleByID(Integer.parseInt(strID)));
-			model.addAttribute("BlogContentBean", blogContentService.GetContentByID(Integer.parseInt(strID)));
-//			model.addAttribute("ListBlogBean", blogContentService.GetBlogByID(Integer.parseInt(strID)));
-			model.addAttribute("startupMode", "'source'");
-			model.addAttribute("id", "\"id\" : " + Integer.parseInt(strID) + ",");
-		}
 	}
 	/* #########################新刪改查區######################### */
 }

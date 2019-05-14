@@ -3,7 +3,10 @@ package com.gg.test2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.NavFooterBean;
@@ -13,7 +16,7 @@ import com.gg.test2.repository.BlogContentRepository;
 public class BlogContentService {
 	@Autowired
 	private BlogContentRepository blogContentRepository;
-	@Autowired 
+	@Autowired
 	private NavFooterBean nf;
 
 	public List<BlogContentBean> GetBlog() {
@@ -35,21 +38,43 @@ public class BlogContentService {
 	public List<BlogContentBean> GetBlogByUser(String userID) {
 		return blogContentRepository.getBlogByUser(Integer.parseInt(userID));
 	}
-	
-	public List<BlogContentBean> GetBlog(String userID,String blogID){
-		System.out.println("userID="+userID+"*******\"blogID=\"+"+blogID);
-		if(!userID.isEmpty()) {
-			return GetBlogByUser(userID.toString());
-		}else if(!blogID.isEmpty()) {
-			return GetBlogByID(Integer.parseInt(blogID));
-		}else {
-			return GetBlog();
-		}	
+
+	public List<BlogContentBean> GetBlogByUser(Authentication auth) {
+		String workid = auth.getName(); // 取得工號
+		String id = blogContentRepository.getUserIDByWorkID(workid);
+		return blogContentRepository.getBlogByUser(Integer.parseInt(id));
 	}
-	
+
+	public List<BlogContentBean> GetBlog(String userID, String blogID) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String workid = auth.getName();
+		if (!blogID.isEmpty()) {
+			System.out.println("blogID=" + blogID);
+			return GetBlogByID(Integer.parseInt(blogID));
+		} else if (!workid.isEmpty()) {
+			// System.out.println("我的發文列表");
+			return GetBlogByUser(auth);
+		} else {
+			return GetBlog();
+		}
+	}
+
 	public NavFooterBean GetNavAndFooter() {
 		return nf;
 	}
 
-	
+	public void showEditType(Model model, String strID, Authentication auth) {
+		String id = blogContentRepository.getUserIDByWorkID(auth.getName());
+		model.addAttribute("username", id);
+		if (strID.isEmpty()) {
+			model.addAttribute("ListBlogContentBean", "第二步：請在此輸入內文");
+			model.addAttribute("startupMode", "'wysiwyg'");
+		} else {
+			model.addAttribute("BlogTitleBean", GetTitleByID(Integer.parseInt(strID)));
+			model.addAttribute("BlogContentBean", GetContentByID(Integer.parseInt(strID)));
+//			model.addAttribute("ListBlogBean", blogContentService.GetBlogByID(Integer.parseInt(strID)));
+			model.addAttribute("startupMode", "'source'");
+			model.addAttribute("id", "\"id\" : " + Integer.parseInt(strID) + ",");
+		}
+	}
 }

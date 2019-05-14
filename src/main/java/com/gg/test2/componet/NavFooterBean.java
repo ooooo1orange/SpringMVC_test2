@@ -52,7 +52,7 @@ public class NavFooterBean {
 				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"blogedit\">新增文章</a>\n" + 
 				"					</li>\n" + 
 				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post\">我的發文</a></li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"signup\">SignUp</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"signup\">SignUp</a>\n" +
 				"					</li>\n" + 
 				"				</ul>\n" + 
 				"			</div>\n" + 
