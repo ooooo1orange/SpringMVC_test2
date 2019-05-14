@@ -38,7 +38,7 @@ public class NavFooterBean {
 				"	<nav class=\"navbar navbar-expand-lg navbar-light fixed-top\"\n" + 
 				"		id=\"mainNav\">\n" + 
 				"		<div class=\"container\">\n" + 
-				"			<a class=\"navbar-brand\" href=\"index\">Start Bootstrap</a>\n" + 
+				"			<a class=\"navbar-brand\" href=\"index\">Blog GO Go GO</a>\n" + 
 				"			<button class=\"navbar-toggler navbar-toggler-right\" type=\"button\"\n" + 
 				"				data-toggle=\"collapse\" data-target=\"#navbarResponsive\"\n" + 
 				"				aria-controls=\"navbarResponsive\" aria-expanded=\"false\"\n" + 
@@ -49,11 +49,10 @@ public class NavFooterBean {
 				"				<ul class=\"navbar-nav ml-auto\">\n" + 
 				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"index\">Home</a>\n" + 
 				"					</li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"about\">About</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"blogedit\">新增文章</a>\n" + 
 				"					</li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post\">Sample\n" + 
-				"							Post</a></li>\n" + 
-				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"signup\">Contact</a>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"post\">我的發文</a></li>\n" + 
+				"					<li class=\"nav-item\"><a class=\"nav-link\" href=\"signup\">SignUp</a>\n" + 
 				"					</li>\n" + 
 				"				</ul>\n" + 
 				"			</div>\n" + 

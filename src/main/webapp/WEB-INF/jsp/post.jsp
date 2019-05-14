@@ -31,22 +31,22 @@
   ${NavAndFooter.nav}
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('/test2/resources/img/post-bg.jpg')">
+  <header class="masthead" >
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-heading">
-            <h1>Man must explore, and this is exploration at its greatest</h1>
+          <div class="post-heading" style = 'padding: 10px 0 50px'>
+            <!-- <h1>Man must explore, and this is exploration at its greatest</h1>
             <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
             <span class="meta">Posted by
               <a href="#">Start Bootstrap</a>
-              on August 24, 2019</span>
+              on August 24, 2019</span> -->
           </div>
         </div>
       </div>
     </div>
-  </header>
+  </header> 
 
   <!-- Post Content -->
   <article>
@@ -54,11 +54,12 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <c:forEach items="${ListBlogContentBean}" var="item">
-			${item.name}
+			<br>
 			${item.title}
+			<br>
 			${item.content}
-			${item.modifydate}
-			<button class="btn btn-primary"
+			<div>作者 ${item.name}</div><div>編輯時間 ${item.modifydate}</div>
+			<button  class="btn btn-primary"
 						onclick="javascript:location.href='/test2/blogedit?id=${item.id}'">edit</button>
 			<hr>	
 		</c:forEach>
