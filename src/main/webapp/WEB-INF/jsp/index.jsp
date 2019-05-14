@@ -34,7 +34,7 @@
 
 <body>
 
-	${NavAndFooter.nav}
+	<c:import url="/nav"/>
 
 	<!-- Page Header -->
 	<header class="masthead"
@@ -86,7 +86,7 @@
 
 	<hr>
 
-	${NavAndFooter.footer}
+	<c:import url="/footer"/>
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="/test2/resources/vendor/jquery/jquery.min.js"></script>

@@ -28,7 +28,9 @@
 
 <body>
 
-  ${NavAndFooter.nav}
+  <c:import url="/nav"/>
+  
+  
 
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('/test2/resources/img/about-bg.jpg')">
@@ -37,7 +39,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>About Me</h1>
+            <h1>測試頁面</h1>
             <span class="subheading">This is what I do.</span>
           </div>
         </div>
@@ -58,7 +60,7 @@
 
   <hr>
 
-  ${NavAndFooter.footer}
+  <c:import url="/footer"/>
 
   <!-- Bootstrap core JavaScript -->
   <script src="/test2/resources/vendor/jquery/jquery.min.js"></script>

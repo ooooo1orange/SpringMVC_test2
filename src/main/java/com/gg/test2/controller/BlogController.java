@@ -43,6 +43,15 @@ public class BlogController {
 	public String root() {
 		return "redirect:index";
 	}
+	@GetMapping("/nav")
+	public String nav() {
+		return "nav";
+	}
+	
+	@GetMapping("/footer")
+	public String footer() {
+		return "footer";
+	}
 
 	@GetMapping("/index")
 	public String GoIndex(Model model) {

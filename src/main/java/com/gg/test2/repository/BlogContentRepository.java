@@ -37,7 +37,7 @@ public class BlogContentRepository {
 	public List<BlogContentBean> getBlog() {
 
 		List rows = (List) jdbcTemplate.query(
-				"select a.*,b.name as name from blog as a\n" + "left join users as b\n" + "on a.owner = b.id",
+				"select a.*,b.name as name from blog as a\n" + "left join users as b\n" + "on a.owner = b.id order by a.modifydate desc",
 				new RowMapperResultSetExtractor(new BlogRowMapper()));
 
 		Iterator it = rows.iterator();
@@ -88,7 +88,7 @@ public class BlogContentRepository {
 	public List<BlogContentBean> getBlogByID(Integer id) {
 
 		List rows = (List) jdbcTemplate.query("select a.*,b.name as name from blog as a\n" + "left join users as b\n"
-				+ "on a.owner = b.id \n" + "where a.id = ?", new Object[] { id },
+				+ "on a.owner = b.id \n" + "where a.id = ? order by a.modifydate desc", new Object[] { id },
 				new RowMapperResultSetExtractor(new BlogRowMapper()));
 
 		Iterator it = rows.iterator();
@@ -103,7 +103,7 @@ public class BlogContentRepository {
 	public List<BlogContentBean> getBlogByUser(Integer userID) {
 
 		List rows = (List) jdbcTemplate.query("select a.*,b.name as name from blog as a\n" + "left join users as b\n"
-				+ "on a.owner = b.id \n" + "where a.owner = ?", new Object[] { userID },
+				+ "on a.owner = b.id \n" + "where a.owner = ? order by a.modifydate desc", new Object[] { userID },
 				new RowMapperResultSetExtractor(new BlogRowMapper()));
 
 		Iterator it = rows.iterator();
