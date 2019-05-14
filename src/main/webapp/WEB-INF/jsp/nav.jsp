@@ -17,10 +17,17 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="blogedit">新增文章</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="post">我的發文</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="signup">SignUp!</a>
-				</li>
+				<li class="nav-item"><a class="nav-link" href="post">我的發文</a></li>
+				<c:choose>
+					<c:when test="${empty pageContext.request.userPrincipal.name}">
+						<li class="nav-item"><a class="nav-link" href="login">Login!</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="logout">Hi
+								${pageContext.request.userPrincipal.name} !&nbsp;&nbsp;&nbsp;Logout!</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</div>

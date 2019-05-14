@@ -36,13 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http
 		.authorizeRequests()
-			.antMatchers("/resources/**","/signup","/index","/","/about")
+			.antMatchers("/resources/**","/signup","/index","/","/about","/logout")
 				.permitAll()
 			.anyRequest().authenticated()
 			.and()
 		.formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/")
+			.defaultSuccessUrl("/index")
 			.permitAll()
 			.and()
 		.httpBasic();

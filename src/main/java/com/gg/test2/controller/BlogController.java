@@ -37,17 +37,18 @@ public class BlogController {
 	NavFooterBean nf;
 	@Autowired
 	UserService us;
-
+	
 	/* #########################bootstrap page######################### */
 	@GetMapping("/")
 	public String root() {
 		return "redirect:index";
 	}
+
 	@GetMapping("/nav")
 	public String nav() {
 		return "nav";
 	}
-	
+
 	@GetMapping("/footer")
 	public String footer() {
 		return "footer";
@@ -55,26 +56,23 @@ public class BlogController {
 
 	@GetMapping("/index")
 	public String GoIndex(Model model) {
-		// nf = blogContentService.GetNavAndFooter();
-		model.addAttribute("NavAndFooter", nf);
 		List<BlogContentBean> lb = blogContentService.GetBlog();
+		
 		model.addAttribute("ListBlogContentBean", lb);
 		return "index";
 	}
 
 	@GetMapping("/about")
 	public String GoAbout(Model model) {
-		model.addAttribute("NavAndFooter", nf);
+		//拿來測試用
 		return "about";
 	}
 
 	@GetMapping("/post")
 	public String GoSelf(Model model, @ModelAttribute("bid") String blogID) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = us.GetUserIDByWorkID(auth);
-		System.out.println("this is user id:" + id);
-		model.addAttribute("NavAndFooter", nf);
 		List<BlogContentBean> lb = blogContentService.GetBlog(blogID);
+		String id = us.GetUserIDByWorkID(auth);
 		model.addAttribute("ListBlogContentBean", lb);
 		model.addAttribute("UserID", id);
 		return "post";
@@ -86,44 +84,28 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response,Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/";// You can redirect wherever you want, but generally it's a good practice to
-							// show login screen again.
+		return "redirect:/index";
+		// You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 
 	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })
 	public String signup(Model model, @ModelAttribute("workid") String workid,
 			@ModelAttribute("password") String password, @ModelAttribute("name") String name,
 			@ModelAttribute("email") String email) {
-
 		// url會看到資料 待改進
 		String h = us.GoToSignUP(name, email, workid, password);
 		model.addAttribute("isSignUp", h);
-
 		return "signup";
 	}
 
 	/* #########################bootstrap page######################### */
 
 	/* #########################顯示編輯區######################### */
-	@GetMapping("/blog")
-	public String GetBlog(Model model) {
-		List<BlogContentBean> lb = blogContentService.GetBlog();
-		model.addAttribute("ListBlogContentBean", lb);
-		return "blog";
-	}
-
-	@GetMapping("/content")
-	public String Getcontent(Model model, @ModelAttribute("id") String strID) {
-		List<BlogContentBean> lb = blogContentService.GetBlogByID(Integer.parseInt(strID));
-		model.addAttribute("ListBlogContentBean", lb);
-		return "contentpage";
-	}
-
 	@GetMapping("/re-edit")
 	public String reEdit(@RequestParam(value = "id", required = true) Integer id, RedirectAttributes red) {
 		red.addAttribute("id", id);
@@ -171,4 +153,20 @@ public class BlogController {
 		return result;
 	}
 	/* #########################新刪改查區######################### */
+
+	/* #########################廢除區######################### */
+	@GetMapping("/blog")
+	public String GetBlog(Model model) {
+		List<BlogContentBean> lb = blogContentService.GetBlog();
+		model.addAttribute("ListBlogContentBean", lb);
+		return "blog";
+	}
+
+	@GetMapping("/content")
+	public String Getcontent(Model model, @ModelAttribute("id") String strID) {
+		List<BlogContentBean> lb = blogContentService.GetBlogByID(Integer.parseInt(strID));
+		model.addAttribute("ListBlogContentBean", lb);
+		return "contentpage";
+	}
+	/* #########################廢除區######################### */
 }
