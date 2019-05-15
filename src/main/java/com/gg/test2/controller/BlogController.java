@@ -121,6 +121,14 @@ public class BlogController {
 	/* #########################顯示編輯區######################### */
 
 	/* #########################新刪改查區#######這塊應該擺service################## */
+	@GetMapping("/search")
+	public String search(Model model,@ModelAttribute("keyword") String keyword) {
+		List<BlogContentBean> lb = blogContentService.searchResult(keyword);
+		model.addAttribute("ListBlogContentBean", lb);
+		return "post";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping("/insertblog")
 	public String insertblog(@RequestParam(value = "title", required = true) String title,

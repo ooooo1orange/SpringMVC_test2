@@ -81,4 +81,9 @@ public class BlogContentService {
 			model.addAttribute("id", "\"id\" : " + Integer.parseInt(strID) + ",");
 		}
 	}
+	
+	//搜尋關鍵字或tag
+	public List<BlogContentBean> searchResult(String keyword){
+		return blogContentRepository.searchResult(keyword);
+	}
 }
