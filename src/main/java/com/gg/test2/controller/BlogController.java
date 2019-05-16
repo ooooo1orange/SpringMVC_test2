@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.NavFooterBean;
-import com.gg.test2.repository.EditBlog;
+import com.gg.test2.repository.EditBlogRepository;
 import com.gg.test2.service.BlogContentService;
 import com.gg.test2.service.UserService;
 
@@ -32,7 +32,7 @@ public class BlogController {
 	@Autowired
 	BlogContentService blogContentService;
 	@Autowired
-	EditBlog ib;
+	EditBlogRepository ib;
 	@Autowired
 	NavFooterBean nf;
 	@Autowired

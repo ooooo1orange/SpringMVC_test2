@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +60,15 @@
 			<br>
 			${item.content}
 			<div>作者 ${item.name}</div><div>編輯時間 ${item.modifydate}</div>
-			<div>tag: ${item.tag}</div>
+			<p>
+				<c:set var="tag_o" value= '${item.tag}' />
+				<c:set var="tag_split" value="${fn:split(tag_o, ',')}" />
+				<c:forEach var="item2" items="${fn:split(tag_o, ',')}">
+					<c:if test="${not empty item2}">
+				        <a href='/test2/search?keyword=${item2}'>#${item2}</a>
+				    </c:if>
+				</c:forEach>
+			</p> 
 			<c:if test="${item.owner == UserID}">
 			<button  class="btn btn-primary"
 						onclick="javascript:location.href='/test2/blogedit?id=${item.id}'">edit</button>

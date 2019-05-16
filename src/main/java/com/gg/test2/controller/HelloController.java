@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.UserBean;
 import com.gg.test2.repository.BlogContentRepository;
-import com.gg.test2.repository.EditBlog;
+import com.gg.test2.repository.EditBlogRepository;
 import com.gg.test2.service.BlogContentService;
 import com.gg.test2.service.UserService;
 
