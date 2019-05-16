@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EditBlog {
+public class EditBlogRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
