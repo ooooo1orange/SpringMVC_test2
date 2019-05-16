@@ -25,6 +25,7 @@ import com.gg.test2.componet.BlogContentBean;
 import com.gg.test2.componet.NavFooterBean;
 import com.gg.test2.repository.EditBlogRepository;
 import com.gg.test2.service.BlogContentService;
+import com.gg.test2.service.EditBlogService;
 import com.gg.test2.service.UserService;
 
 @Controller
@@ -32,12 +33,12 @@ public class BlogController {
 	@Autowired
 	BlogContentService blogContentService;
 	@Autowired
-	EditBlogRepository ib;
+	EditBlogService editBlogService;
 	@Autowired
 	NavFooterBean nf;
 	@Autowired
 	UserService us;
-	
+
 	/* #########################bootstrap page######################### */
 	@GetMapping("/")
 	public String root() {
@@ -57,15 +58,24 @@ public class BlogController {
 	@GetMapping("/index")
 	public String GoIndex(Model model) {
 		List<BlogContentBean> lb = blogContentService.GetBlog();
-		
+
 		model.addAttribute("ListBlogContentBean", lb);
 		return "index";
 	}
 
+	@ResponseBody
 	@GetMapping("/about")
 	public String GoAbout(Model model) {
-		//拿來測試用
-		return "about";
+		// 拿來測試用
+		String id = "17";
+		String tag = "";
+		String[] tags = {};
+		if(!tag.isEmpty()) {
+			tags = tag.replace("#","").split(",");
+		}
+		EditBlogRepository editBlogRepository = null;
+		editBlogRepository.updateTag(Integer.parseInt(id), tags);
+		return "ok";
 	}
 
 	@GetMapping("/post")
@@ -84,13 +94,14 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response,Model model) {
+	public String logoutPage(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/index";
-		// You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		// You can redirect wherever you want, but generally it's a good practice to
+		// show login screen again.
 	}
 
 	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })
@@ -122,21 +133,21 @@ public class BlogController {
 
 	/* #########################新刪改查區#######這塊應該擺service################## */
 	@GetMapping("/search")
-	public String search(Model model,@ModelAttribute("keyword") String keyword) {
+	public String search(Model model, @ModelAttribute("keyword") String keyword) {
 		List<BlogContentBean> lb = blogContentService.searchResult(keyword);
 		model.addAttribute("ListBlogContentBean", lb);
 		return "post";
 	}
-	
-	
+
 	@ResponseBody
 	@PostMapping("/insertblog")
 	public String insertblog(@RequestParam(value = "title", required = true) String title,
 			@RequestParam(value = "content", required = true) String content,
-			@RequestParam(value = "owner", required = true) String owner) {
-		String result = "title:" + title + " content:" + content + " owner:" + owner;
+			@RequestParam(value = "owner", required = true) String owner,
+			@RequestParam(value = "tag", required = true) String tag) {
+		String result = "title:" + title + " content:" + content + " owner:" + owner + " tag:" + tag;
 		System.out.println(result);
-		ib.insert(title, content, owner);
+		editBlogService.inert(title, content, owner, tag);
 		return result;
 	}
 
@@ -145,10 +156,11 @@ public class BlogController {
 	public String updateblog(@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "title", required = true) String title,
 			@RequestParam(value = "content", required = true) String content,
-			@RequestParam(value = "owner", required = true) String owner) {
-		String result = "id:" + id + " title:" + title + " content:" + content + " owner:" + owner;
+			@RequestParam(value = "owner", required = true) String owner,
+			@RequestParam(value = "tag", required = true) String tag) {
+		String result = "title:" + title + " content:" + content + " owner:" + owner + " tag:" + tag;
 		System.out.println(result);
-		ib.update(id, title, content, owner);
+		editBlogService.update(id.toString(), title, content, owner, tag);
 		return result;
 	}
 
@@ -157,7 +169,7 @@ public class BlogController {
 	public String deleteblog(@RequestParam(value = "id", required = true) Integer id) {
 		String result = "id:" + id;
 		System.out.println(result);
-		ib.delete(id);
+		//editBlogService.delete(id);
 		return result;
 	}
 	/* #########################新刪改查區######################### */

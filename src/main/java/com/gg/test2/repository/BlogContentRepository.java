@@ -59,6 +59,17 @@ public class BlogContentRepository {
 		}
 		return rows;
 	}
+	/**
+	 * 給insert tag前需要取得blog_id
+	 * 
+	 * @return table blog的流水號id
+	 */
+	public String getBlogIDbyTitle(String title) {
+		String blog_id = jdbcTemplate.queryForObject("select a.id from blog as a\n" + "left join users as b\n"
+				+ "on a.owner = b.id \n" + "where a.title = ?", new Object[] { title },
+                java.lang.String.class);
+		return blog_id;
+	}
 
 	public String getContentByID(Integer id) {
 

@@ -27,7 +27,8 @@ function processData() {
 			${id}
 			"title" : $('#title').val(),
 			"content" : CKEDITOR.instances.content.getData(),
-			"owner" : ${username}
+			"owner" : ${username},
+			"tag":$('#tag').val()
 		};
 		var token = $("meta[name='_csrf']").attr("th:content");
 		var header = $("meta[name='_csrf_header']").attr("th:content");
