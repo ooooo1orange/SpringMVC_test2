@@ -9,7 +9,7 @@ public class BlogContentBean {
 	private String content;
 	private String owner;
 	private String name;
-
+	private String tag;
 	private String modifydate;
 
 	public BlogContentBean() {
@@ -18,13 +18,14 @@ public class BlogContentBean {
 		content = "";
 		owner = "";
 		name = "";
+		tag = "";
 		modifydate = "";
 	}
 
 	@Override
 	public String toString() {
 		return "BlogContentBean [id=" + id + ", title=" + title + ", content=" + content + ", owner=" + owner
-				+ ", name=" + name + ", modifydate=" + modifydate + "]";
+				+ ", name=" + name + ", tag=" + tag + ", modifydate=" + modifydate + "]";
 	}
 
 	public Integer getId() {
@@ -66,6 +67,14 @@ public class BlogContentBean {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 
 	public String getModifydate() {
 		return modifydate;
@@ -74,5 +83,7 @@ public class BlogContentBean {
 	public void setModifydate(String modifydate) {
 		this.modifydate = modifydate;
 	}
+
+	
 
 }

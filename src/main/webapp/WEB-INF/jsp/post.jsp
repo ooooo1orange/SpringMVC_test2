@@ -59,6 +59,7 @@
 			<br>
 			${item.content}
 			<div>作者 ${item.name}</div><div>編輯時間 ${item.modifydate}</div>
+			<div>tag: ${item.tag}</div>
 			<c:if test="${item.owner == UserID}">
 			<button  class="btn btn-primary"
 						onclick="javascript:location.href='/test2/blogedit?id=${item.id}'">edit</button>
