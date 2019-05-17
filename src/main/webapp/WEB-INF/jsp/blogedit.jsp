@@ -192,7 +192,7 @@ function processData() {
 		<textarea name="content" id="content" rows="10" cols="80">
 		${BlogContentBean}
 		</textarea>
-		<input type="text" id="tag" placeholder="看你要不要輸入tag...." /><input
+		<input type="text" id="tag" placeholder="看你要不要輸入tag...." value='${tags}'/><input
 			type='button' value='送出' onclick='processData()'>
 
 	</form>

@@ -2,8 +2,10 @@ package com.gg.test2.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +14,7 @@ import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.gg.test2.componet.BlogContentBean;
+import com.gg.test2.componet.TagsBean;
 
 @Repository
 public class BlogContentRepository {
@@ -32,6 +35,15 @@ public class BlogContentRepository {
 			blogContent.setModifydate(rs.getString("modifydate"));
 
 			return blogContent;
+		}
+	}
+	
+	public class TagRowMapper implements RowMapper {
+
+		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			TagsBean tags = new TagsBean();
+			tags.setTag(rs.getString("tag"));
+			return tags;
 		}
 	}
 
@@ -127,7 +139,7 @@ public class BlogContentRepository {
 		Iterator it = rows.iterator();
 		while (it.hasNext()) {
 			BlogContentBean blogmap = (BlogContentBean) it.next();
-
+			
 			// System.out.println(usermap.get("name"));
 		}
 		return rows;
@@ -157,6 +169,26 @@ public class BlogContentRepository {
 		}
 		return rows;
 		
+	}
+	/**
+	 * 用部落格ID查該篇文章所有的tag
+	 * @param blogID 請給我部落格的ID
+	 * @return List tag_name
+	 */
+	public List<TagsBean> getTag(Integer blogID) {
+		List rows = (List) jdbcTemplate.query("select tag_name as tag\n" + 
+				"FROM tag\n" + 
+				"where blog_id = ? ", 
+				new Object[] { blogID }, 
+				new RowMapperResultSetExtractor(new TagRowMapper()));
+		Iterator it = rows.iterator();
+		while (it.hasNext()) {
+			TagsBean tagmap = (TagsBean) it.next();
+//			System.out.println(tagmap.getTag());
+//			tag+="#"+tagmap.getTag();
+		}
+		System.out.println(rows);
+		return rows;
 	}
 	
 	public List<BlogContentBean> searchResult(String keyword){

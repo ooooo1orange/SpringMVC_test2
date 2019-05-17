@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gg.test2.componet.BlogContentBean;
-import com.gg.test2.componet.NavFooterBean;
 import com.gg.test2.repository.EditBlogRepository;
 import com.gg.test2.service.BlogContentService;
 import com.gg.test2.service.EditBlogService;
@@ -34,8 +33,6 @@ public class BlogController {
 	BlogContentService blogContentService;
 	@Autowired
 	EditBlogService editBlogService;
-	@Autowired
-	NavFooterBean nf;
 	@Autowired
 	UserService us;
 
@@ -67,14 +64,9 @@ public class BlogController {
 	@GetMapping("/about")
 	public String GoAbout(Model model) {
 		// 拿來測試用
-		String id = "17";
-		String tag = "";
-		String[] tags = {};
-		if(!tag.isEmpty()) {
-			tags = tag.replace("#","").split(",");
-		}
-		EditBlogRepository editBlogRepository = null;
-		editBlogRepository.updateTag(Integer.parseInt(id), tags);
+		String Blog_ID = "11";
+		String tags = blogContentService.getTag(Blog_ID);
+		
 		return "ok";
 	}
 

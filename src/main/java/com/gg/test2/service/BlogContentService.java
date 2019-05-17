@@ -1,5 +1,6 @@
 package com.gg.test2.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.gg.test2.componet.BlogContentBean;
-import com.gg.test2.componet.NavFooterBean;
+import com.gg.test2.componet.TagsBean;
 import com.gg.test2.repository.BlogContentRepository;
 import com.gg.test2.repository.UserRepository;
 
@@ -17,8 +18,6 @@ import com.gg.test2.repository.UserRepository;
 public class BlogContentService {
 	@Autowired
 	private BlogContentRepository blogContentRepository;
-	@Autowired
-	private NavFooterBean nf;
 	@Autowired
 	private UserRepository ur;
 
@@ -62,11 +61,23 @@ public class BlogContentService {
 		}
 	}
 
-	public NavFooterBean GetNavAndFooter() {
-		return nf;
+	public String getTag(String Blog_ID) {
+		List<TagsBean> tags = blogContentRepository.getTag(Integer.parseInt(Blog_ID));
+		String tag = "";
+		Iterator it = tags.iterator();
+		while (it.hasNext()) {
+			TagsBean tagmap = (TagsBean) it.next();
+//			System.out.println(tagmap.getTag());
+			tag+="#"+tagmap.getTag();
+			if(it.hasNext()) {
+				tag+=",";
+			}
+		}
+		System.out.println(tag);
+		return tag;
 	}
 
-	//文章編輯頁面顯示判斷	
+	// 文章編輯頁面顯示判斷
 	public void showEditType(Model model, String strID, Authentication auth) {
 		String id = ur.getUserIDByWorkID(auth.getName());
 		model.addAttribute("username", id);
@@ -77,13 +88,14 @@ public class BlogContentService {
 			model.addAttribute("BlogTitleBean", GetTitleByID(Integer.parseInt(strID)));
 			model.addAttribute("BlogContentBean", GetContentByID(Integer.parseInt(strID)));
 //			model.addAttribute("ListBlogBean", blogContentService.GetBlogByID(Integer.parseInt(strID)));
+			model.addAttribute("tags", getTag(strID));
 			model.addAttribute("startupMode", "'source'");
 			model.addAttribute("id", "\"id\" : " + Integer.parseInt(strID) + ",");
 		}
 	}
-	
-	//搜尋關鍵字或tag
-	public List<BlogContentBean> searchResult(String keyword){
+
+	// 搜尋關鍵字或tag
+	public List<BlogContentBean> searchResult(String keyword) {
 		return blogContentRepository.searchResult(keyword);
 	}
 }
